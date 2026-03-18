@@ -2,6 +2,8 @@
   <RouterView></RouterView>
 </template>
 
-<script></script>
+<script>
+import TheHeader from './modules/components/TheHeader.vue';
+</script>
 
 <style lang="scss" scoped></style>
