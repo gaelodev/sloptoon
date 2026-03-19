@@ -8,6 +8,9 @@
 
     <!-- Main components go here -->
 
+    <NewTaleModal class="hidden"></NewTaleModal>
+    <!--absolute top-0 left-0-->
+
     <!-- Footer goes here -->
   </div>
 </template>
@@ -16,6 +19,7 @@
 import { ref } from 'vue';
 import TheHeader from '../components/TheHeader.vue';
 import TheSidebar from '../components/TheSidebar.vue';
+import NewTaleModal from '../components/NewTaleModal.vue';
 
 const isSidebarOpen = ref(false);
 </script>
