@@ -8,8 +8,8 @@
 
     <!-- Main components go here -->
 
-    <NewTaleModal class="hidden"></NewTaleModal>
-    <!--absolute top-0 left-0-->
+    <NewTaleModal class="absolute top-0 left-0"></NewTaleModal>
+    <!--absolute top-0 left-0 | hidden-->
 
     <!-- Footer goes here -->
   </div>
