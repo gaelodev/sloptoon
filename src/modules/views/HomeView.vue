@@ -5,6 +5,8 @@
 
     <!-- Sidebar: recibe el estado y escucha cuando se cierra -->
     <TheSidebar :open="isSidebarOpen" @close="isSidebarOpen = false" />
+    <!--Main components go here (sidebar, tale cards, etc)-->
+    <TaleView></TaleView>
 
     <!-- Main components go here -->
 
@@ -20,6 +22,7 @@ import { ref } from 'vue';
 import TheHeader from '../components/TheHeader.vue';
 import TheSidebar from '../components/TheSidebar.vue';
 import NewTaleModal from '../components/NewTaleModal.vue';
+import TaleView from './TaleView.vue';
 
 const isSidebarOpen = ref(false);
 </script>
