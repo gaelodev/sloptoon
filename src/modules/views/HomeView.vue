@@ -3,12 +3,6 @@
     <!-- Header: escucha el evento y cambia el estado -->
     <TheHeader @toggle-sidebar="isSidebarOpen = !isSidebarOpen" class="h-20" />
 
-<<<<<<< HEAD
-    <!-- Sidebar: recibe el estado y escucha cuando se cierra -->
-    <TheSidebar :open="isSidebarOpen" @close="isSidebarOpen = false" />
-    <!--Main components go here (sidebar, tale cards, etc)-->
-    <TaleView></TaleView>
-=======
     <section class="flex flex-row flex-1">
       <!-- Sidebar: recibe el estado y escucha cuando se cierra -->
       <TheSidebar
@@ -17,7 +11,6 @@
         @close="isSidebarOpen = false"
         class="self-stretch"
       />
->>>>>>> origin/gaelo
 
       <!-- Main components go here -->
       <div class="flex flex-col mx-12">
