@@ -1,1 +1,23 @@
 @import 'tailwindcss';
+
+@theme {
+  --color-melondrama-100: #fff7f2;
+  --color-melondrama-200: #ffe1d2;
+  --color-melondrama-300: #fdc5b1;
+  --color-melondrama-400: #f9a58f;
+  --color-melondrama-500: #f0806c;
+  --color-melondrama-600: #bd4b3f;
+  --color-melondrama-700: #8b2a26;
+  --color-melondrama-800: #591616;
+  --color-melondrama-900: #591616;
+
+  --color-greymelon-100: #fcfbfa;
+  --color-greymelon-200: #ebe7e5;
+  --color-greymelon-300: #d9d2d0;
+  --color-greymelon-400: #c7bebc;
+  --color-greymelon-500: #b5aaa8;
+  --color-greymelon-600: #918786;
+  --color-greymelon-700: #6e6564;
+  --color-greymelon-800: #4a4343;
+  --color-greymelon-900: #262222;
+}
