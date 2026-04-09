@@ -1,4 +1,5 @@
 import HomeView from '@/modules/views/HomeView.vue';
+import TaleView from '@/modules/views/TaleView.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
@@ -8,6 +9,11 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+    },
+    {
+      path: '/tale',
+      name: 'taleView',
+      component: TaleView,
     },
   ],
 });

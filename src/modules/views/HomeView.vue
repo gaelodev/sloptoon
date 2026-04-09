@@ -13,9 +13,16 @@
       />
 
       <!-- Main components go here -->
-      <div class="flex flex-col mx-12">
+      <div class="flex flex-col mx-12 w-full">
         <h1 class="text-3xl font-bold text-greymelon-900 my-8">¡Hola de nuevo!</h1>
         <h2 class="text-2xl font-medium my-8 text-greymelon-700">Tus historias recientes</h2>
+        <section class="flex flex-row flex-wrap gap-8 w-full">
+          <!--TaleCard components-->
+          <TaleCard
+            title="Ejemplo"
+            summarize="Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum a dolorem tempore ea quasi quod architecto quis, rerum labore vero exercitationem sed natus atque fugiat qui dignissimos sit eos nesciunt?"
+          />
+        </section>
       </div>
     </section>
     <NewTaleModal
@@ -23,7 +30,6 @@
       :class="[isModalOpen ? 'absolute top-0 left-0' : 'hidden']"
       @modal-closed="isModalOpen = false"
     ></NewTaleModal>
-    <!--absolute top-0 left-0 | hidden-->
 
     <!-- Footer goes here -->
   </div>
@@ -35,6 +41,7 @@ import TheHeader from '../components/TheHeader.vue';
 import TheSidebar from '../components/TheSidebar.vue';
 import NewTaleModal from '../components/NewTaleModal.vue';
 import TaleView from './TaleView.vue';
+import TaleCard from '../components/TaleCard.vue';
 
 const isSidebarOpen = ref(true);
 
