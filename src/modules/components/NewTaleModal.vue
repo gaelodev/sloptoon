@@ -13,7 +13,7 @@
       <section class="w-full mt-4">
         <select
           name=""
-          id=""
+          id="genreSelect"
           class="w-full h-10 border-2 border-greymelon-800 rounded-sm pl-4 pr-4"
         >
           <option value="">Género narrativo</option>
@@ -32,7 +32,7 @@
         </select>
         <select
           name=""
-          id=""
+          id="toneSelect"
           class="w-full h-10 border-2 border-greymelon-800 rounded-sm mt-2 pl-4 pr-4"
         >
           <option value="">Tono</option>
@@ -163,13 +163,16 @@
       <section class="w-full mt-4 flex flex-1">
         <textarea
           name=""
-          id=""
+          id="extraConditions"
           placeholder="Opcionalmente puedes ingresar instrucciones adicionales aquí. Ej. Nombre del protagonista: Yoshua, lugar: bosque encantado, tropo narrativo: una traición, etc."
           class="border border-greymelon-900 w-full rounded-sm px-2 py-1"
         ></textarea>
       </section>
       <section class="w-full mt-3">
-        <button class="w-full h-10 bg-melondrama-500 text-greymelon-100 rounded-md font-semibold">
+        <button
+          class="w-full h-10 bg-melondrama-500 text-greymelon-100 rounded-md font-semibold hover:bg-melondrama-600 transition-all cursor-pointer"
+          @click="generatePrompt"
+        >
           Escribir historia
         </button>
       </section>
@@ -212,9 +215,14 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-const extension = ref('avg');
-const pov = ref('first');
-const complexity = ref('natural');
+
+type Extension = 'short' | 'avg' | 'long';
+type Pov = 'first' | 'third';
+type Complexity = 'natural' | 'simple' | 'elaborated' | 'literary';
+
+const extension = ref<Extension>('avg');
+const pov = ref<Pov>('first');
+const complexity = ref<Complexity>('natural');
 
 interface Props {
   open: boolean;
@@ -223,4 +231,60 @@ interface Props {
 defineProps<Props>();
 
 defineEmits(['modalClosed']);
+
+const generatePrompt = () => {
+  const povMap = {
+    first: 'primera',
+    third: 'tercera',
+  };
+
+  const extensionMap = {
+    short: 'de 100 a 300 palabras',
+    avg: 'de 300 a 600 palabras',
+    long: 'de 600 a 1200 palabras',
+  };
+
+  const complexityMap = {
+    simple: 'simple',
+    natural: 'natural',
+    elaborated: 'elaborado',
+    literary: 'literario',
+  };
+
+  const promptPov = povMap[pov.value];
+  const promptExtension = extensionMap[extension.value];
+  const promptComplexity = complexityMap[complexity.value];
+
+  const genreSelect = document.getElementById('genreSelect') as HTMLSelectElement;
+  const genreSelected = genreSelect.options[genreSelect.selectedIndex];
+
+  const toneSelect = document.getElementById('toneSelect') as HTMLSelectElement;
+  const toneSelected = toneSelect.options[toneSelect.selectedIndex];
+
+  const extraConditionsText = document.getElementById('extraConditions') as HTMLTextAreaElement;
+
+  const prompt = `
+  Escribe una historia original con las siguientes características:
+
+  Género: ${genreSelected.text}
+  Tono: ${toneSelected.text}
+  Narrador: ${promptPov} persona
+  Extensión: ${promptExtension}
+  Complejidad del lenguaje: ${promptComplexity}
+
+  Condiciones adicionales:
+  ${extraConditionsText?.value === '' ? 'Ninguna.' : extraConditionsText?.value}
+
+  Instrucciones:
+  - El género define la estructura narrativa y el tipo de conflicto.
+  - El tono define la atmósfera emocional y el estilo de la narración.
+  - Mantén coherencia entre género y tono.
+  - Respeta estrictamente la extensión indicada.
+  - No incluyas explicaciones ni comentarios fuera de la historia.
+
+  Genera únicamente la historia.
+`;
+
+  console.log(prompt);
+};
 </script>
