@@ -4,6 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 dotenv.config();
+console.log(process.env.OPENAI_API_KEY);
 
 const app = express();
 app.use(cors());
