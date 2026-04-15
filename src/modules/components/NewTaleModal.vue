@@ -296,7 +296,7 @@ const generatePrompt = () => {
 
   console.log(prompt);
 
-  //writeTale();
+  writeTale();
 };
 
 const writeTale = () => {
