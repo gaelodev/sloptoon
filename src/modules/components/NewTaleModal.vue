@@ -1,6 +1,6 @@
 <template>
   <div class="h-full w-full flex justify-center items-center bg-greymelon-600/40 backdrop-blur-xs">
-    <div class="w-1/3 h-3/4 bg-greymelon-100 rounded-xl flex p-5 flex-col">
+    <div class="w-1/3 min-h-3/4 bg-greymelon-100 rounded-xl flex p-5 flex-col">
       <section class="flex flex-row justify-between w-full text">
         <h3 class="font-bold text-2xl">Nueva historia</h3>
         <div
@@ -172,6 +172,7 @@
         <button
           class="w-full h-10 bg-melondrama-500 text-greymelon-100 rounded-md font-semibold hover:bg-melondrama-600 transition-all cursor-pointer"
           @click="generatePrompt"
+          id="writeButton"
         >
           Escribir historia
         </button>
@@ -214,7 +215,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { usePromptProcessStore } from '../stores/prompt-process';
 
 type Extension = 'short' | 'avg' | 'long';
 type Pov = 'first' | 'third';
@@ -224,15 +226,22 @@ const extension = ref<Extension>('avg');
 const pov = ref<Pov>('first');
 const complexity = ref<Complexity>('natural');
 
+let prompt: string;
+
 interface Props {
   open: boolean;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 
-defineEmits(['modalClosed']);
+const emit = defineEmits(['modalClosed']);
 
 const generatePrompt = () => {
+  const writeButton = document.getElementById('writeButton') as HTMLButtonElement;
+  writeButton.disabled = true;
+  writeButton.className =
+    'w-full h-10 bg-melondrama-400 text-greymelon-100 rounded-md font-semibold transition-all cursor-not-allowed';
+
   const povMap = {
     first: 'primera',
     third: 'tercera',
@@ -263,7 +272,7 @@ const generatePrompt = () => {
 
   const extraConditionsText = document.getElementById('extraConditions') as HTMLTextAreaElement;
 
-  const prompt = `
+  prompt = `
   Escribe una historia original con las siguientes características:
 
   Género: ${genreSelected.text}
@@ -286,5 +295,22 @@ const generatePrompt = () => {
 `;
 
   console.log(prompt);
+
+  //writeTale();
+};
+
+const writeTale = () => {
+  const store = usePromptProcessStore();
+
+  store.execute(prompt);
+
+  watch(
+    () => store.done,
+    (val) => {
+      emit('modalClosed');
+
+      store.$reset();
+    },
+  );
 };
 </script>
