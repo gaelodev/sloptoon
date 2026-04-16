@@ -10,7 +10,7 @@ import {
   orderBy,
   Timestamp,
 } from 'firebase/firestore';
-import { db } from '@/firebase'; // tu instancia de Firestore
+import { db } from '@/firebase';
 
 export interface Tale {
   id: string;
