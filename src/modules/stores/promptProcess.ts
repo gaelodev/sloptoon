@@ -14,6 +14,7 @@ export const usePromptProcessStore = defineStore('promptProcess', {
 
   actions: {
     async execute(prompt: string) {
+      console.log(prompt);
       this.error = '';
       try {
         const res = await fetch('/api/generate-tale', {
@@ -21,9 +22,9 @@ export const usePromptProcessStore = defineStore('promptProcess', {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ prompt }),
         });
-
+        console.log(res.status);
         const data = await res.json();
-
+        console.log(data);
         this.tale = data.historia;
         this.taleId = data.id;
         this.done = true;
