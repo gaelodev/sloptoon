@@ -184,6 +184,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import { usePromptProcessStore } from '../stores/promptProcess';
+import { useRouter } from 'vue-router';
 
 type Extension = 'short' | 'avg' | 'long';
 type Pov = 'first' | 'third';
@@ -266,15 +267,19 @@ const generatePrompt = () => {
   writeTale();
 };
 
+const router = useRouter();
+
 const writeTale = () => {
   const store = usePromptProcessStore();
-
   store.execute(prompt);
 
   watch(
     () => store.done,
     (val) => {
+      const id = store.taleId;
       emit('modalClosed');
+
+      router.push({ name: 'taleView', params: { id } });
 
       store.$reset();
     },

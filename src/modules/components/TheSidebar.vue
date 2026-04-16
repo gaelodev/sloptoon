@@ -18,9 +18,7 @@
 
       <!-- Navegación -->
       <div class="flex flex-col gap-4 flex-1 font-semibold text-melondrama-700">
-        <a href="#" class="hover:text-melondrama-900 transition">Inicio</a>
-        <a href="#" class="hover:text-melondrama-900 transition">Mis historias</a>
-        <a href="#" class="hover:text-melondrama-900 transition">Configuración</a>
+        <RouterLink to="/" class="hover:text-melondrama-900 transition">Inicio</RouterLink>
       </div>
 
       <!-- Logout -->

@@ -16,7 +16,7 @@
   -->
   <section class="w-full flex justify-center">
     <div class="flex flex-col w-2/5 my-8">
-      <h1 class="font-bold text-3xl text-melondrama-900 pb-6">Título de la historia</h1>
+      <!--<h1 class="font-bold text-3xl text-melondrama-900 pb-6">Título de la historia</h1>-->
       <p class="text-greymelon-900 mb-4">{{ store.tale }}</p>
     </div>
   </section>

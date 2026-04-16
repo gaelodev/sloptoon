@@ -26,29 +26,26 @@
       </button>
 
       <!-- Logo / Título -->
-      <h1 class="text-3xl font-bold tracking-wide">Sloptoon</h1>
+      <RouterLink to="/">
+        <h1 class="text-3xl font-bold tracking-wide">Sloptoon</h1>
+      </RouterLink>
     </div>
-    <!-- Navegación -->
-    <nav class="flex gap-8">
-      <a href="#" class="hover:text-yellow-400 transition-colors">Inicio</a>
-      <a href="#" class="hover:text-yellow-400 transition-colors">Explorar</a>
-      <a href="#" class="hover:text-yellow-400 transition-colors">Mi lista</a>
-    </nav>
 
     <!-- Usuario -->
-    <div class="flex items-center gap-3">
+    <!--<div class="flex items-center gap-3">
       <span class="text-sm text-gray-300">Usuario</span>
       <div
         class="w-8 h-8 rounded-full bg-yellow-400 flex items-center justify-center text-gray-900 font-bold text-sm"
       >
         U
       </div>
-    </div>
+    </div>-->
   </header>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { RouterLink } from 'vue-router';
 const emit = defineEmits(['toggle-sidebar']);
 
 const toggleSidebar = () => {
