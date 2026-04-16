@@ -182,7 +182,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import { usePromptProcessStore } from '../stores/promptProcess';
 import { saveTale } from '@/services/taleService';
 import { user } from '@/authState';
@@ -196,6 +196,7 @@ const router = useRouter();
 const extension = ref<Extension>('avg');
 const pov = ref<Pov>('first');
 const complexity = ref<Complexity>('natural');
+const store = usePromptProcessStore();
 
 let prompt: string;
 
@@ -270,28 +271,24 @@ const generatePrompt = () => {
   writeTale(prompt);
 };
 
-const writeTale = (prompt: string) => {
-  const store = usePromptProcessStore();
+const isGenerating = ref(false);
 
-  store.execute(prompt);
+const writeTale = async (prompt: string) => {
+  if (isGenerating.value) return;
 
-  const stop = watch(
-    () => store.done,
-    async (val) => {
-      if (val) {
-        // 🔥 1. Guardar historia
-        const tale = await saveTale(user.value!.uid, store.tale);
+  isGenerating.value = true;
 
-        // 🔥 2. Cerrar modal
-        emit('modalClosed');
+  try {
+    await store.execute(prompt);
 
-        // 🔥 3. Redirigir
-        router.push(`/tales/${tale.id}`);
+    emit('modalClosed');
 
-        stop();
-        store.$reset();
-      }
-    },
-  );
+    router.push(`/tales/${store.taleId}`);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    isGenerating.value = false;
+    store.$reset();
+  }
 };
 </script>
