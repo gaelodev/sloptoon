@@ -11,6 +11,9 @@
         </div>
       </section>
       <section class="w-full mt-4">
+        <p class="text-sm text-greymelon-500 mb-2">
+          El género y tono serán aleatorios si no los eliges.
+        </p>
         <select
           name=""
           id="genreSelect"
@@ -262,6 +265,7 @@ const generatePrompt = () => {
   - Mantén coherencia entre género y tono.
   - Respeta estrictamente la extensión indicada.
   - No incluyas explicaciones ni comentarios fuera de la historia.
+  - Género y tono que se especifique, o en su caso, aleatorios.
 
   Genera únicamente la historia.
 `;
