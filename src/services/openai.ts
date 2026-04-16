@@ -1,5 +1,5 @@
-export const generarHistoria = async (prompt: string) => {
-  const res = await fetch('http://localhost:3000/generar-historia', {
+export const generateTale = async (prompt: string) => {
+  const res = await fetch('http://localhost:3000/generar-tale', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

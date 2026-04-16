@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { generarHistoria } from '@/services/openai';
+import { generateTale } from '@/services/openai';
 import { deleteTale, saveTale } from '@/services/taleService';
 import { user } from '@/authState';
 
@@ -16,12 +16,16 @@ export const usePromptProcessStore = defineStore('promptProcess', {
     async execute(prompt: string) {
       this.error = '';
       try {
-        const data = await generarHistoria(prompt);
+        const res = await fetch('/api/generate-tale', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt }),
+        });
+
+        const data = await res.json();
+
         this.tale = data.historia;
-
-        const saved = await saveTale(user.value!.uid, this.tale);
-        this.taleId = saved.id;
-
+        this.taleId = data.id;
         this.done = true;
       } catch {
         this.error = 'Ocurrió un error inesperado. Intente de nuevo más tarde.';

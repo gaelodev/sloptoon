@@ -266,8 +266,6 @@ const generatePrompt = () => {
   Genera únicamente la historia.
 `;
 
-  console.log(prompt);
-
   writeTale(prompt);
 };
 
