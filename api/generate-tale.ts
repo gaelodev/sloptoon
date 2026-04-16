@@ -22,7 +22,7 @@ export default async function handler(req: any, res: any) {
     });
 
     const texto =
-      response.output?.[0]?.content?.[0]?.text ||
+      (response.output?.[0] as any)?.content?.[0]?.text ??
       'No se pudo generar, todo lo que pudo fallar ha fallado💔🌹';
 
     return res.status(200).json({
