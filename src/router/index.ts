@@ -23,7 +23,7 @@ const router = createRouter({
           component: HomeView,
         },
         {
-          path: 'tale/:id?',
+          path: 'tales/:id',
           name: 'taleView',
           component: TaleView,
         },
