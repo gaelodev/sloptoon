@@ -7,7 +7,7 @@
         : 'hidden',
     ]"
   >
-    <nav class="flex flex-col gap-8 px-6 h-full">
+    <nav class="flex flex-col gap-6 px-6 h-full">
       <!-- Botón nueva historia -->
       <button
         @click="$emit('newTaleButtonClicked')"
@@ -17,9 +17,11 @@
       </button>
 
       <!-- Navegación -->
-      <div class="flex flex-col gap-4 flex-1 font-semibold text-melondrama-700">
+      <div class="flex flex-col gap-4 font-semibold text-melondrama-700">
         <RouterLink to="/" class="hover:text-melondrama-900 transition">Inicio</RouterLink>
       </div>
+
+      <div class="w-full h-px bg-greymelon-500"></div>
 
       <!-- Logout -->
       <button

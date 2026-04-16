@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col mx-12 w-full">
-    <h1 class="text-3xl font-bold text-greymelon-900 my-6">¡Hola de nuevo!</h1>
+    <h1 class="text-3xl font-bold text-greymelon-900 my-8">¡Hola de nuevo!</h1>
     <h2 class="text-2xl font-medium my-6 text-greymelon-700">Tus historias recientes</h2>
     <section class="flex flex-row flex-wrap gap-8 w-full mb-12">
       <!-- Loading -->

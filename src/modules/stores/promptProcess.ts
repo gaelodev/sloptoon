@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { generarHistoria } from '@/services/openai';
-import { saveTale } from '@/services/taleService';
+import { deleteTale, saveTale } from '@/services/taleService';
 import { user } from '@/authState';
 
 export const usePromptProcessStore = defineStore('promptProcess', {
@@ -25,6 +25,13 @@ export const usePromptProcessStore = defineStore('promptProcess', {
         this.done = true;
       } catch {
         this.error = 'Ocurrió un error inesperado. Intente de nuevo más tarde.';
+      }
+    },
+    async deleteTaleById(taleId: string) {
+      try {
+        await deleteTale(user.value!.uid, taleId);
+      } catch {
+        this.error = 'No se pudo eliminar la historia.';
       }
     },
   },
