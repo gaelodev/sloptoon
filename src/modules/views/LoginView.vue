@@ -67,8 +67,13 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { auth, googleProvider } from '@/firebase';
+import {
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signInWithRedirect,
+  GoogleAuthProvider,
+} from 'firebase/auth';
+import { auth } from '@/firebase';
 
 const router = useRouter();
 
@@ -76,25 +81,45 @@ const email = ref('');
 const password = ref('');
 const error = ref('');
 
+// 🔹 Configurar proveedor de Google correctamente
+const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({
+  prompt: 'select_account',
+});
+
+// 🔹 Login con email/password
 const login = async () => {
   try {
     await signInWithEmailAndPassword(auth, email.value, password.value);
     error.value = '';
     router.push('/');
-  } catch {
-    error.value = 'Credenciales incorrectas';
+  } catch (err: any) {
+    console.error('EMAIL LOGIN ERROR:', err);
+    error.value = err.message || 'Credenciales incorrectas';
   }
 };
 
+// 🔹 Login con Google (POPUP)
 const loginWithGoogle = async () => {
   try {
-    await signInWithPopup(auth, googleProvider);
+    const result = await signInWithPopup(auth, googleProvider);
+    console.log('GOOGLE LOGIN SUCCESS:', result);
+    error.value = '';
     router.push('/');
-  } catch {
-    error.value = 'Error al iniciar sesión con Google';
+  } catch (err: any) {
+    console.error('GOOGLE POPUP ERROR:', err);
+
+    // fallback automático si el popup falla
+    if (err.code === 'auth/popup-blocked' || err.code === 'auth/cancelled-popup-request') {
+      console.warn('Popup bloqueado, usando redirect...');
+      await signInWithRedirect(auth, googleProvider);
+    } else {
+      error.value = err.message || 'Error al iniciar sesión con Google';
+    }
   }
 };
 
+// 🔹 Navegación
 const goToRegister = () => {
   router.push('/register');
 };
