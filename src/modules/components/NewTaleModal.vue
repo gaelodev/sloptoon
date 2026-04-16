@@ -272,20 +272,17 @@ const generatePrompt = () => {
 const isGenerating = ref(false);
 
 const writeTale = async (prompt: string) => {
-  console.log(prompt);
   if (isGenerating.value) return;
 
   isGenerating.value = true;
 
   try {
     await store.execute(prompt);
-    console.log(store.done);
 
     emit('modalClosed');
     console.log(store.taleId);
     router.push(`/tales/${store.taleId}`);
   } catch (error) {
-    console.error(error);
   } finally {
     isGenerating.value = false;
     store.$reset();

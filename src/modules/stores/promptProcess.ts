@@ -14,7 +14,6 @@ export const usePromptProcessStore = defineStore('promptProcess', {
 
   actions: {
     async execute(prompt: string) {
-      console.log(prompt);
       this.error = '';
       try {
         const res = await fetch('/api/generate-tale', {
@@ -24,10 +23,12 @@ export const usePromptProcessStore = defineStore('promptProcess', {
         });
         console.log(res.status);
         const data = await res.json();
-        console.log(data);
         this.tale = data.historia;
         this.taleId = data.id;
         this.done = true;
+
+        const saved = await saveTale(user.value!.uid, this.tale);
+        this.taleId = saved.id;
       } catch {
         this.error = 'Ocurrió un error inesperado. Intente de nuevo más tarde.';
       }
