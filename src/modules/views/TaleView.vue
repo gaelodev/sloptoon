@@ -17,7 +17,7 @@
   <section class="w-full flex justify-center">
     <div class="flex flex-col w-2/5 my-8">
       <!--<h1 class="font-bold text-3xl text-melondrama-900 pb-6">Título de la historia</h1>-->
-      <p class="text-greymelon-900 mb-4">{{ store.tale }}</p>
+      <p class="text-greymelon-900 mb-4">{{ taleContent }}</p>
     </div>
   </section>
 </template>
@@ -29,6 +29,7 @@ import { user } from '@/authState';
 import { computed, onMounted, ref, watch } from 'vue';
 import { usePromptProcessStore } from '../stores/promptProcess';
 
+const taleContent = ref('');
 const route = useRoute();
 const router = useRouter();
 const store = usePromptProcessStore();
@@ -36,12 +37,14 @@ const store = usePromptProcessStore();
 const taleId = computed(() => route.params.id);
 
 onMounted(async () => {
-  if (taleId) {
-    const tale = await getTaleById(user.value!.uid, taleId.value as string);
-    store.tale = tale?.content ?? '';
-  }
-});
+  const id = route.params.id as string;
 
+  if (!id) return;
+
+  const tale = await getTaleById(user.value!.uid, id);
+
+  taleContent.value = tale?.content ?? 'No se encontró la historia';
+});
 watch(
   () => store.taleId,
   (id) => {

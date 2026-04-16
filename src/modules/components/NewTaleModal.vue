@@ -184,12 +184,15 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import { usePromptProcessStore } from '../stores/promptProcess';
+import { saveTale } from '@/services/taleService';
+import { user } from '@/authState';
 import { useRouter } from 'vue-router';
 
 type Extension = 'short' | 'avg' | 'long';
 type Pov = 'first' | 'third';
 type Complexity = 'natural' | 'simple' | 'elaborated' | 'literary';
 
+const router = useRouter();
 const extension = ref<Extension>('avg');
 const pov = ref<Pov>('first');
 const complexity = ref<Complexity>('natural');
@@ -264,24 +267,30 @@ const generatePrompt = () => {
 
   console.log(prompt);
 
-  writeTale();
+  writeTale(prompt);
 };
 
-const router = useRouter();
-
-const writeTale = () => {
+const writeTale = (prompt: string) => {
   const store = usePromptProcessStore();
+
   store.execute(prompt);
 
-  watch(
+  const stop = watch(
     () => store.done,
-    (val) => {
-      const id = store.taleId;
-      emit('modalClosed');
+    async (val) => {
+      if (val) {
+        // 🔥 1. Guardar historia
+        const tale = await saveTale(user.value!.uid, store.tale);
 
-      router.push({ name: 'taleView', params: { id } });
+        // 🔥 2. Cerrar modal
+        emit('modalClosed');
 
-      store.$reset();
+        // 🔥 3. Redirigir
+        router.push(`/tales/${tale.id}`);
+
+        stop();
+        store.$reset();
+      }
     },
   );
 };
